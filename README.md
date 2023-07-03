@@ -21,49 +21,37 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Setup do Projeto:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Instalando dependencias
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+  php composer install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Configurando banco de dados
+* Verifique seu arquivo .env com as configurações corretas com o seu banco de dados
 
-## Laravel Sponsors
+```env
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=laravel
+  DB_USERNAME=root
+  DB_PASSWORD=
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Rodando as migrations e seeders:
 
-### Premium Partners
+```bash
+  php artisan migrate --seed
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Iniciando servidor
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+  php artisan serve
+```
 
 ## Documentação da API
 
@@ -127,4 +115,72 @@ OBS: Returned a token.
 ### Exemplo:
 ```bash
   curl -XDELETE http://127.0.0.1:8000/api/posts/1 -H "Authorization: Bearer <login_token>"
+```
+
+### Listar users
+```http
+  GET api/users
+```
+### Exemplo:
+```bash
+  curl -XGET http://127.0.0.1:8000/api/users -H "Authorization: Bearer <login_token>"
+```
+### Atualizar um User
+```http
+  PUT/PATCH api/users/{id}
+```
+### Exemplo:
+```bash
+  curl -XPUT http://127.0.0.1:8000/api/users/1 -H "Content-Type: application/json" -H "Authorization: Bearer <login_token>" -d "{\"name\": \"Joao Pedro Moreira\", \"email\": \"jpedro@gmail.com\", \"password\": \"adminadmin\", \"password_confirmation\": \"adminadmin\"}"
+```
+
+### Deletar um User
+```
+  DELETE api/users/{id}
+```
+### Exemplo:
+```bash
+  curl -XDELETE http://127.0.0.1:8000/api/users/1 -H "Authorization: Bearer <login_token>"
+```
+
+### Listar produtos
+```http
+  GET api/products
+```
+### Exemplo:
+```bash
+  curl -XGET http://127.0.0.1:8000/api/products -H "Authorization: Bearer <login_token>"
+```
+### Listar produtos com paginação
+```http
+  GET api/products
+```
+### Exemplo:
+```bash
+  curl -XGET http://127.0.0.1:8000/api/products?per_page=1 -H "Authorization: Bearer <login_token>"
+```
+### Mostrar produto
+```http
+  GET api/products
+```
+### Exemplo:
+```bash
+  curl -XGET http://127.0.0.1:8000/api/products/{product} -H "Authorization: Bearer <login_token>"
+```
+### Atualizar um produto
+```http
+  PUT/PATCH api/products/{product}
+```
+### Exemplo:
+```bash
+  curl -XPUT http://127.0.0.1:8000/api/products/{product} -H "Content-Type: application/json" -H "Authorization: Bearer <login_token>" -d "{\"name\": \"Example name Prod\", \"description\": \"Example description Prod\", \"price\": 1234.90}"
+```
+
+### Deletar um produto
+```
+  DELETE api/products/{product}
+```
+### Exemplo:
+```bash
+  curl -XDELETE http://127.0.0.1:8000/api/products/{product} -H "Authorization: Bearer <login_token>"
 ```
