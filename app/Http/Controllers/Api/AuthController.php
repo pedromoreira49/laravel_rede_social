@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
@@ -15,6 +15,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users|max:255',
+            'role' => 'required|string|max:10',
             'password' => 'required|string|min:6|confirmed',
         ]);
         
@@ -25,6 +26,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
+            'role' => $request->input('role'),
             'password' => bcrypt($request->input('password')),
         ]);
 
@@ -46,7 +48,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = $user->createToken('authToken')->plainTextToken;
+            $ability[0] = $user->role;
+            $token = $user->createToken('authToken', $ability)->plainTextToken;
 
             return response()->json(['token' => $token, 'user' => $user], 200);
         } else {
