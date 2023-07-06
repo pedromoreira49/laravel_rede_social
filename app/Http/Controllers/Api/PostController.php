@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         $posts = Post::all();
@@ -49,7 +45,7 @@ class PostController extends Controller
         if(!$user){
             return response()->json(['error'=> 'Unauthorized'], 401);
         }
-        if($post->user_id === $user->id){
+        if($post->user_id === $user->id || $user->tokenCan('admin')){
             $post->update($request->validated());
             return response()->json($post);
         }else{
@@ -65,7 +61,7 @@ class PostController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        if ($post->user_id === $user->id) {
+        if ($post->user_id === $user->id || $user->tokenCan('admin')) {
             $post->delete();
             return response()->json(['message' => 'Post deleted successfully.'], 204);
         } else {
