@@ -53,6 +53,25 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
   php artisan serve
 ```
 
+## Documentação das querys
+
+### Buscar posts e mostrar a qual usuário pertence
+```bash
+  Post::with('user')->get()
+```
+### Buscar produtos e mostrar a qual usuário pertence
+```bash
+  Product::with('user')->get()
+```
+### Buscar posts e produtos que um usuário específico cadastrou
+```bash
+  User::with('posts','products')->find(1)
+```
+### Buscar produtos especificando uma faixa de preços
+```bash
+  Product::whereBetween('price', [100,500])->orderBy('price', 'desc')->get()
+```
+
 ## Documentação da API
 
 ### Realizar register
